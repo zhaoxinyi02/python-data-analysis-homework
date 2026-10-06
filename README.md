@@ -26,7 +26,8 @@
 | --- | --- | --- | --- |
 | Week 1 | [homework-week1](./homework-week1) | Python 基础：输出 `helloworld` | 已完成 |
 | Week 2 | [homework-week2](./homework-week2) | OLS 理论证明、调整后 \(R^2\)、Carseats 多元线性回归与 VIF | 已完成 |
-| Week 3+ | - | 后续课程作业 | 待更新 |
+| Week 3 | [homework-week3](./homework-week3) | Ridge、Lasso、Elastic Net 理论与 Hitters 实战 | 已完成 |
+| Week 4 | [homework-week4](./homework-week4) | Netflix 数据 Elastic Net 分析 | 已完成 |
 
 ## 仓库结构
 
@@ -39,6 +40,14 @@ python-data-analysis-homework/
     ├── theory.md
     └── code/
         └── carseats_regression.py
+├── homework-week3/
+│   ├── theory.md
+│   └── code/
+│       └── regularized_regression_comparison.py
+└── homework-week4/
+    ├── analysis.md
+    └── code/
+        └── netflix_elastic_net.py
 ```
 
 ## Week 1
@@ -139,6 +148,15 @@ python homework-week2/code/carseats_regression.py
 - statsmodels
 - OLS Multiple Linear Regression
 - Variance Inflation Factor (VIF)
+- Ridge / Lasso / Elastic Net
+- scikit-learn Pipeline 与 10 折交叉验证
+- Netflix 数据 Elastic Net 分析
+
+安装全部依赖：
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
