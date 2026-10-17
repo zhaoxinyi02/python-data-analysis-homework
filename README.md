@@ -28,6 +28,7 @@
 | Week 2 | [homework-week2](./homework-week2) | OLS 理论证明、调整后 \(R^2\)、Carseats 多元线性回归与 VIF | 已完成 |
 | Week 3 | [homework-week3](./homework-week3) | Ridge、Lasso、Elastic Net 理论与 Hitters 实战 | 已完成 |
 | Week 4 | [homework-week4](./homework-week4) | Netflix 数据 Elastic Net 分析 | 已完成 |
+| Week 5 | [homework-week5](./homework-week5) | German Credit 数据 SVM 分类（RBF 核 + 类别权重） | 已完成 |
 
 ## 仓库结构
 
@@ -48,6 +49,11 @@ python-data-analysis-homework/
     ├── analysis.md
     └── code/
         └── netflix_elastic_net.py
+└── homework-week5/
+    ├── analysis.md
+    ├── code/
+    │   └── credit_svm.py
+    └── results/
 ```
 
 ## Week 1
@@ -141,6 +147,37 @@ python homework-week2/code/carseats_regression.py
 
 程序会直接在终端输出模型摘要、系数解释和 VIF 检验结果。
 
+## Week 5：German Credit 数据的 SVM 分类
+
+第五周学习分类算法支持向量机（SVM），作业要求使用课件描述的数据集完成数据分类。本周选用课件案例②的 **Statlog (German Credit Data)** 数据集（OpenML `data_id=31`，1000 条贷款记录 × 20 个特征，好坏比 7:3）。
+
+### 理论要点
+
+- 几何间隔 \(\gamma_i = y_i(w^Tx_i+b)/\|w\|\)，原始问题 \(\min \frac{1}{2}\|w\|^2\)；
+- 软间隔引入松弛变量，参数 \(C\) 权衡间隔宽度与违规数量；
+- 核技巧将内积替换为 \(K(x_a,x_b)\)，RBF 核可学习非线性边界；
+- 类别不平衡时用 `class_weight='balanced'` 给少数类更大的惩罚。
+
+### 实验设计
+
+文件：[homework-week5/code/credit_svm.py](./homework-week5/code/credit_svm.py)
+
+- 数值特征标准化、类别特征独热编码，全部封装在 `Pipeline` 内防止数据泄漏；
+- 对比 RBF 核 SVM（class_weight balanced）、线性 SVM 与决策树，5 折分层交叉验证评估 AUC；
+- 指标：CV AUC、测试 AUC、准确率、违约类召回率/精确率、AUC-PR。
+
+本次运行的关键结果约为：
+
+| 指标 | RBF SVM | 线性 SVM | 决策树 |
+| --- | ---: | ---: | ---: |
+| 测试 AUC | **0.812** | 0.807 | 0.599 |
+| 测试 AUC-PR | **0.685** | 0.633 | 0.376 |
+| 违约召回率 | 0.567 | 0.800 | 0.667 |
+
+结论：小样本 + 独热后高维稀疏的场景下，RBF 核 SVM 排序能力最强，决策树接近随机；不平衡数据应看 AUC 与少数类召回，而不是准确率。
+
+详细分析见 [homework-week5/analysis.md](./homework-week5/analysis.md)。
+
 ## 技术栈
 
 - Python 3
@@ -151,6 +188,7 @@ python homework-week2/code/carseats_regression.py
 - Ridge / Lasso / Elastic Net
 - scikit-learn Pipeline 与 10 折交叉验证
 - Netflix 数据 Elastic Net 分析
+- SVM 分类（线性核 / RBF 核、GridSearchCV、class_weight、ROC / AUC）
 
 安装全部依赖：
 
